@@ -98,4 +98,15 @@ class BowlingGameTest {
 	}
 
 
+	@Test
+	void score_a_game_with_only_spare() {
+		BowlingGame game = new BowlingGame();
+
+
+		IntStream.range(0, 21).forEach(
+				(idx) -> game.roll(5)
+		);
+		assertThat(game.score()).isEqualTo(150);
+	}
+
 }

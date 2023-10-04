@@ -17,12 +17,15 @@ public class BowlingGame {
 		for (int rollIdx = 0; rollIdx < rolls.size(); rollIdx++) {
 			if (isStrike(rollIdx)) {
 				score += MAX_PIN_ON_A_FRAME + strikeBonus(rollIdx);
-				if (isLastFrame(rollIdx)) {
+				if (rollIdx == 9) {
 					rollIdx = 11;
 				}
 			} else if (frameScore(rollIdx) == MAX_PIN_ON_A_FRAME) {
 				score += frameScore(rollIdx) + spareBonus(rollIdx);
 				rollIdx = rollIdx + 1;
+				if (rollIdx == 19) {
+					rollIdx = 21;
+				}
 			} else {
 				score += frameScore(rollIdx);
 				rollIdx = rollIdx + 1;
