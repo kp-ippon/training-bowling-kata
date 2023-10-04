@@ -8,7 +8,7 @@ public class BowlingGame {
 	private final List<Integer> rolls = new ArrayList<>();
 
 	private static int goToEndOfFrame(int rollIdx) {
-		return rollIdx + 1;
+		return rollIdx + 2;
 	}
 
 	public void roll(int i) {
@@ -17,30 +17,30 @@ public class BowlingGame {
 
 	public int score() {
 		int score = 0;
-		int rollIdx = 0;
+		int currRoll = 0;
 
-		while (rollIdx < rolls.size()) {
-			if (isStrike(rollIdx)) {
-				score += MAX_PIN_ON_A_FRAME + strikeBonus(rollIdx);
-				if (isLastFrame(rollIdx)) {
-					break;
-				}
-			} else if (isSpare(rollIdx)) {
-				score += getFrameScore(rollIdx) + spareBonus(rollIdx);
-				if (isLastFrame(rollIdx)) {
-					break;
-				} else {
-					rollIdx = goToEndOfFrame(rollIdx);
-				}
+		for (int currFrame = 0; currFrame < 10; currFrame++) {
+
+			if (isStrike(currRoll)) {
+				score += MAX_PIN_ON_A_FRAME + strikeBonus(currRoll);
+			} else if (isSpare(currRoll)) {
+				score += getFrameScore(currRoll) + spareBonus(currRoll);
 			} else {
-				score += getFrameScore(rollIdx);
-				rollIdx = goToEndOfFrame(rollIdx);
+				score += getFrameScore(currRoll);
 			}
-			rollIdx++;
+
+			currRoll = goToNextFrame(currRoll);
 		}
 
-
 		return score;
+	}
+
+	private int goToNextFrame(int currRoll) {
+		if (isStrike(currRoll)) {
+
+			return currRoll + 1;
+		}
+		return currRoll + 2;
 	}
 
 	private boolean isLastFrame(int rollIdx) {
