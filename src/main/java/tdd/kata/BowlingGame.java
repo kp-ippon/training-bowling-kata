@@ -17,9 +17,8 @@ public class BowlingGame {
 
 	public int score() {
 		int score = 0;
-
-
 		int rollIdx = 0;
+
 		while (rollIdx < rolls.size()) {
 			if (isStrike(rollIdx)) {
 				score += MAX_PIN_ON_A_FRAME + strikeBonus(rollIdx);

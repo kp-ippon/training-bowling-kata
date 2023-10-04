@@ -51,19 +51,6 @@ class BowlingGameTest {
 		assertThat(game.score()).isEqualTo(12);
 	}
 
-
-  /*  @Test
-    void score_only_spare_and_finish_with_5pin_on_last_roll() {
-        BowlingGame game = new BowlingGame();
-
-
-        IntStream.range(0,21).forEach(i -> {
-            game.roll(5);
-        });
-
-        assertThat(game.score()).isEqualTo(150);
-    }*/
-
 	@Test
 	void score_a_strike_should_apply_a_bonus_with_2_following_rolls() {
 		BowlingGame game = new BowlingGame();
