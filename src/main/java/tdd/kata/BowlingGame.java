@@ -47,15 +47,6 @@ public class BowlingGame {
 		return rollIdx == (rolls.size() - 3);
 	}
 
-
-	private static boolean isSpareLastFrame(int rollIdx) {
-		return rollIdx == 19;
-	}
-
-	private static boolean isStrikeLastFrame(int rollIdx) {
-		return rollIdx == 9;
-	}
-
 	private boolean isSpare(int rollIdx) {
 		return getFrameScore(rollIdx) == MAX_PIN_ON_A_FRAME;
 	}
