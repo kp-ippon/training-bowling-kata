@@ -1,38 +1,57 @@
 package tdd.kata;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class BowlingGame {
-    private final List<Integer> rolls = new ArrayList<>();
+	public static final int MAX_PIN_ON_A_FRAME = 10;
+	private final List<Integer> rolls = new ArrayList<>();
 
-    public void roll(int i) {
-        this.rolls.add(i);
-    }
+	public void roll(int i) {
+		this.rolls.add(i);
+	}
 
-    public int score() {
-        int score = 0;
-        for (int index = 0; index < rolls.size(); index++) {
-            if (index + 1 < rolls.size() && frameScore(index) == 10) {
-                score += frameScore(index) + firstRollOfNextFrame(index);
-                index++;
-            } else {
-                score += currentRollScore(index);
-            }
-        }
-        return score;
-    }
+	public int score() {
+		int score = 0;
 
-    private Integer currentRollScore(int index) {
-        return rolls.get(index);
-    }
+		for (int rollIdx = 0; rollIdx < rolls.size(); rollIdx++) {
+			if (isStrike(rollIdx)) {
+				score += MAX_PIN_ON_A_FRAME + strikeBonus(rollIdx);
+				if (isLastFrame(rollIdx)) {
+					rollIdx = 11;
+				}
+			} else if (frameScore(rollIdx) == MAX_PIN_ON_A_FRAME) {
+				score += frameScore(rollIdx) + spareBonus(rollIdx);
+				rollIdx = rollIdx + 1;
+			} else {
+				score += frameScore(rollIdx);
+				rollIdx = rollIdx + 1;
+			}
+		}
 
-    private Integer firstRollOfNextFrame(int index) {
-        return rolls.get(index + 2);
-    }
 
-    private int frameScore(int index) {
-        return currentRollScore(index) + rolls.get(index + 1);
-    }
+		return score;
+	}
+
+	private static boolean isLastFrame(int frame) {
+		return frame == 9;
+	}
+
+	private int frameScore(int rollIndex) {
+		return rolls.get(rollIndex) + rolls.get(rollIndex + 1);
+	}
+
+	private boolean isStrike(int currFrame) {
+		return rolls.get(currFrame) == MAX_PIN_ON_A_FRAME;
+	}
+
+	private Integer spareBonus(int rollIndex) {
+		return rolls.get(rollIndex + 2);
+	}
+
+	private int strikeBonus(int rollIndex) {
+		return rolls.get(rollIndex + 1) + rolls.get(rollIndex + 2);
+	}
+
+
 }
