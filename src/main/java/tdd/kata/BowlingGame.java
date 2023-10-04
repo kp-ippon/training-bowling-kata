@@ -5,6 +5,7 @@ import java.util.List;
 
 public class BowlingGame {
 	public static final int MAX_PIN_ON_A_FRAME = 10;
+	public static final int MAX_FRAME = 10;
 	private final List<Integer> rolls = new ArrayList<>();
 
 	private static int goToEndOfFrame(int rollIdx) {
@@ -19,7 +20,7 @@ public class BowlingGame {
 		int score = 0;
 		int currRoll = 0;
 
-		for (int currFrame = 0; currFrame < 10; currFrame++) {
+		for (int currFrame = 0; currFrame < MAX_FRAME; currFrame++) {
 
 			if (isStrike(currRoll)) {
 				score += MAX_PIN_ON_A_FRAME + strikeBonus(currRoll);
@@ -37,7 +38,6 @@ public class BowlingGame {
 
 	private int goToNextFrame(int currRoll) {
 		if (isStrike(currRoll)) {
-
 			return currRoll + 1;
 		}
 		return currRoll + 2;
