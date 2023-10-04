@@ -109,4 +109,17 @@ class BowlingGameTest {
 		assertThat(game.score()).isEqualTo(150);
 	}
 
+
+	@Test
+	void score_game_with_strike_at_the_end() {
+		BowlingGame game = new BowlingGame();
+
+		IntStream.range(0, 18).forEach(
+				(idx) -> game.roll(1)
+		);
+		IntStream.range(0, 3).forEach(
+				(idx) -> game.roll(10)
+		);
+		assertThat(game.score()).isEqualTo(48);
+	}
 }
