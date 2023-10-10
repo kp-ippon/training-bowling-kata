@@ -8,9 +8,6 @@ public class BowlingGame {
 	public static final int MAX_FRAME = 10;
 	private final List<Integer> rolls = new ArrayList<>();
 
-	private static int goToEndOfFrame(int rollIdx) {
-		return rollIdx + 2;
-	}
 
 	public void roll(int i) {
 		this.rolls.add(i);
@@ -25,7 +22,7 @@ public class BowlingGame {
 			if (isStrike(currRoll)) {
 				score += MAX_PIN_ON_A_FRAME + strikeBonus(currRoll);
 			} else if (isSpare(currRoll)) {
-				score += getFrameScore(currRoll) + spareBonus(currRoll);
+				score += MAX_PIN_ON_A_FRAME + spareBonus(currRoll);
 			} else {
 				score += getFrameScore(currRoll);
 			}
@@ -41,10 +38,6 @@ public class BowlingGame {
 			return currRoll + 1;
 		}
 		return currRoll + 2;
-	}
-
-	private boolean isLastFrame(int rollIdx) {
-		return rollIdx == (rolls.size() - 3);
 	}
 
 	private boolean isSpare(int rollIdx) {
