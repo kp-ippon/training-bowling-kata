@@ -7,15 +7,13 @@ import java.util.stream.IntStream;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class BowlingGameTest {
-	private static void fullfilWithStrike(BowlingGame game) {
-		IntStream.range(0, 12).forEach(i -> {
-			game.roll(10);
-		});
+	private static void fullfilWithStrike(BowlingGame game, int complementaryRoll) {
+		IntStream.range(0, complementaryRoll).forEach(idx -> game.roll(10));
 	}
 
-	private static void fulfillGameWithGutterRoll(BowlingGame game, int complementaryRolls) {
+	private static void fulfillRollGame(BowlingGame game, int complementaryRolls, int rollToUse) {
 		IntStream.range(0, complementaryRolls).forEach(
-				(idx) -> game.roll(0)
+				(idx) -> game.roll(rollToUse)
 		);
 	}
 
@@ -24,7 +22,7 @@ class BowlingGameTest {
 		BowlingGame game = new BowlingGame();
 
 		game.roll(9);
-		fulfillGameWithGutterRoll(game, 19);
+		fulfillRollGame(game, 19, 0);
 
 		assertThat(game.score()).isEqualTo(9);
 	}
@@ -34,7 +32,7 @@ class BowlingGameTest {
 		BowlingGame game = new BowlingGame();
 
 		game.roll(8);
-		fulfillGameWithGutterRoll(game, 19);
+		fulfillRollGame(game, 19, 0);
 
 		assertThat(game.score()).isEqualTo(8);
 	}
@@ -46,7 +44,7 @@ class BowlingGameTest {
 		game.roll(8);
 		game.roll(2);
 		game.roll(1);
-		fulfillGameWithGutterRoll(game, 17);
+		fulfillRollGame(game, 17, 0);
 
 		assertThat(game.score()).isEqualTo(12);
 	}
@@ -58,7 +56,7 @@ class BowlingGameTest {
 		game.roll(10);
 		game.roll(2);
 		game.roll(2);
-		fulfillGameWithGutterRoll(game, 16);
+		fulfillRollGame(game, 16, 0);
 
 		assertThat(game.score()).isEqualTo(18);
 	}
@@ -68,7 +66,7 @@ class BowlingGameTest {
 		BowlingGame game = new BowlingGame();
 
 
-		fullfilWithStrike(game);
+		fullfilWithStrike(game, 12);
 
 		assertThat(game.score()).isEqualTo(300);
 	}
@@ -78,9 +76,7 @@ class BowlingGameTest {
 		BowlingGame game = new BowlingGame();
 
 
-		IntStream.range(0, 20).forEach(
-				(idx) -> game.roll(1)
-		);
+		fulfillRollGame(game, 20, 1);
 		assertThat(game.score()).isEqualTo(20);
 	}
 
@@ -88,11 +84,7 @@ class BowlingGameTest {
 	@Test
 	void score_a_game_with_only_spare() {
 		BowlingGame game = new BowlingGame();
-
-
-		IntStream.range(0, 21).forEach(
-				(idx) -> game.roll(5)
-		);
+		fulfillRollGame(game, 21, 5);
 		assertThat(game.score()).isEqualTo(150);
 	}
 
@@ -101,12 +93,8 @@ class BowlingGameTest {
 	void score_game_with_strike_at_the_end() {
 		BowlingGame game = new BowlingGame();
 
-		IntStream.range(0, 18).forEach(
-				(idx) -> game.roll(1)
-		);
-		IntStream.range(0, 3).forEach(
-				(idx) -> game.roll(10)
-		);
+		fulfillRollGame(game, 18, 1);
+		fulfillRollGame(game, 3, 10);
 		assertThat(game.score()).isEqualTo(48);
 	}
 }
