@@ -65,7 +65,6 @@ class BowlingGameTest {
 	void score_a_perfect_game() {
 		BowlingGame game = new BowlingGame();
 
-
 		fullfilWithStrike(game, 12);
 
 		assertThat(game.score()).isEqualTo(300);
@@ -74,8 +73,6 @@ class BowlingGameTest {
 	@Test
 	void score_a_game_without_spare_and_strike() {
 		BowlingGame game = new BowlingGame();
-
-
 		fulfillRollGame(game, 20, 1);
 		assertThat(game.score()).isEqualTo(20);
 	}
